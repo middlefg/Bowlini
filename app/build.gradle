@@ -37,4 +37,7 @@ dependencies {
 
     // OpenCV
     implementation project(path: ':opencv')
+
+    // Tesseract
+    implementation 'com.rmtheis:tess-two:9.0.0'
 }
