@@ -1,0 +1,3 @@
+/Users/ryan/Desktop/Project/Bowlini/opencv/.cxx/cmake/debug/x86/CMakeFiles/edit_cache.dir
+/Users/ryan/Desktop/Project/Bowlini/opencv/.cxx/cmake/debug/x86/CMakeFiles/rebuild_cache.dir
+/Users/ryan/Desktop/Project/Bowlini/opencv/.cxx/cmake/debug/x86/CMakeFiles/opencv_jni_shared.dir
