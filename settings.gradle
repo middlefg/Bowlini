@@ -1,2 +1,2 @@
-include ':app', ':opencv', ':common', ':navigation'
+include ':app', ':opencv', ':common', ':navigation', ':ocr'
 rootProject.name='Bowlini'

@@ -1,13 +1,10 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply from: '../common.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
-    buildToolsVersion Versions.BUILD_TOOLS
-
     defaultConfig {
-        applicationId "com.beok.bowlini"
-        versionCode Releases.VERSION_CODE
-        versionName Releases.VERSION_NAME
         testInstrumentationRunner Tests.RUNNER
     }
 
@@ -16,13 +13,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
+    implementation project(path: ':opencv')
+    implementation project(path: ':common')
+
     implementation Libraries.MATERIAL
     implementation Libraries.CONSTRAINT_LAYOUT
 
     androidTestImplementation Tests.JUNIT
     androidTestImplementation Tests.ESPRESSO
     testImplementation Tests.KOTLIN_TEST_JUNIT
+
+    implementation Libraries.TESSERACT
 }
