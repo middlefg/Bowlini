@@ -5,6 +5,7 @@ object Versions {
     const val MIN_SDK = 23
     const val TARGET_SDK = 29
     const val GRADLE = "3.5.1"
+    const val NAV_ARG = "2.1.0-alpha01"
 }
 
 object Releases {
@@ -26,9 +27,12 @@ object Libraries {
     private const val MATERIAL_VER = "1.0.0"
     private const val CL_VER = "1.1.3"
     private const val TESSERACT_VER = "9.0.0"
+    private const val NAV_VER = "2.0.0"
 
     const val STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN}"
     const val MATERIAL = "com.google.android.material:material:$MATERIAL_VER"
     const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:$CL_VER"
     const val TESSERACT = "com.rmtheis:tess-two:$TESSERACT_VER"
+    const val NAVIGATION = "androidx.navigation:navigation-ui-ktx:${NAV_VER}"
+    const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:${NAV_VER}"
 }
