@@ -1,43 +1,38 @@
 apply plugin: 'com.android.application'
-
-apply plugin: 'kotlin-android'
+apply from: '../common.gradle'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    buildToolsVersion Versions.BUILD_TOOLS
+
     defaultConfig {
         applicationId "com.beok.bowlini"
-        minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode Releases.VERSION_CODE
+        versionName Releases.VERSION_NAME
+        testInstrumentationRunner Tests.RUNNER
     }
+
     buildTypes {
         release {
-            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    // Default
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // AndroidX
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation Libraries.MATERIAL
+    implementation Libraries.CONSTRAINT_LAYOUT
 
     // Test
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    androidTestImplementation Tests.JUNIT
+    androidTestImplementation Tests.ESPRESSO
+    testImplementation Tests.KOTLIN_TEST_JUNIT
 
     // OpenCV
     implementation project(path: ':opencv')
 
     // Tesseract
-    implementation 'com.rmtheis:tess-two:9.0.0'
+    implementation Libraries.TESSERACT
 }
