@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply from: '../common.gradle'
+apply plugin: 'kotlin-kapt'
 
 android {
     buildToolsVersion Versions.BUILD_TOOLS
@@ -16,13 +17,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
+    implementation project(path: ':navigation')
+    implementation project(path: ':ocr')
+
     implementation Libraries.MATERIAL
     implementation Libraries.CONSTRAINT_LAYOUT
 
     androidTestImplementation Tests.JUNIT
     androidTestImplementation Tests.ESPRESSO
     testImplementation Tests.KOTLIN_TEST_JUNIT
+
+    implementation Libraries.NAVIGATION
+    implementation Libraries.NAVIGATION_FRAGMENT
 }
