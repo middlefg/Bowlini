@@ -18,11 +18,11 @@ android {
     dataBinding {
         enabled true
     }
+
 }
 
 dependencies {
     implementation project(path: ':common')
-    implementation project(path: ':opencv')
 
     implementation Libraries.MATERIAL
     implementation Libraries.CONSTRAINT_LAYOUT
@@ -31,5 +31,8 @@ dependencies {
     androidTestImplementation Tests.ESPRESSO
     testImplementation Tests.KOTLIN_TEST_JUNIT
 
-    implementation Libraries.TESSERACT
+    implementation Libraries.TED_PERMISSION
+
+    implementation Libraries.CAMERAX_CORE
+    implementation Libraries.CAMERAX_2
 }

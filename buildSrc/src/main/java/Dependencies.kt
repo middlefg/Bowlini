@@ -29,6 +29,7 @@ object Libraries {
     private const val TESSERACT_VER = "9.0.0"
     private const val NAV_VER = "2.0.0"
     private const val TED_PERMISSION_VER = "2.2.2"
+    private const val CAMERAX_VER = "1.0.0-alpha06"
 
     const val STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN}"
     const val MATERIAL = "com.google.android.material:material:$MATERIAL_VER"
@@ -37,4 +38,6 @@ object Libraries {
     const val NAVIGATION = "androidx.navigation:navigation-ui-ktx:${NAV_VER}"
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:${NAV_VER}"
     const val TED_PERMISSION = "gun0912.ted:tedpermission:$TED_PERMISSION_VER"
+    const val CAMERAX_CORE = "androidx.camera:camera-core:$CAMERAX_VER"
+    const val CAMERAX_2 = "androidx.camera:camera-camera2:$CAMERAX_VER"
 }
