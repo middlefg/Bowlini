@@ -41,7 +41,7 @@ class OcrFragment : BaseFragment<FragmentOcrBinding, BaseViewModel>(
 
     private fun startCamera() {
         val previewConfig = PreviewConfig.Builder().apply {
-            setTargetResolution(Size(640, 480))
+            setTargetResolution(Size(0, 0))
         }.build()
 
         val preview = Preview(previewConfig)
