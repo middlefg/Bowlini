@@ -32,9 +32,7 @@ class OcrFragment : BaseFragment<FragmentOcrBinding, BaseViewModel>(
                     binding.viewFinder.post { startCamera() }
                 }
 
-                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                    // NO OP
-                }
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) = Unit
             },
             deniedMsg = R.string.msg_permission_denied,
             permissions = *arrayOf(Manifest.permission.CAMERA)
