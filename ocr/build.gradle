@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+apply from: '../common.gradle'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    defaultConfig {
+        testInstrumentationRunner Tests.RUNNER
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled true
+    }
+
+}
+
+dependencies {
+    implementation project(path: ':common')
+
+    implementation Libraries.MATERIAL
+    implementation Libraries.CONSTRAINT_LAYOUT
+
+    androidTestImplementation Tests.JUNIT
+    androidTestImplementation Tests.ESPRESSO
+    testImplementation Tests.KOTLIN_TEST_JUNIT
+
+    implementation Libraries.TED_PERMISSION
+
+    implementation Libraries.CAMERAX_CORE
+    implementation Libraries.CAMERAX_2
+}

@@ -1,0 +1,18 @@
+apply plugin: 'com.android.library'
+apply from: '../common.gradle'
+apply plugin: "androidx.navigation.safeargs.kotlin"
+
+android {
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation Libraries.NAVIGATION
+    implementation Libraries.NAVIGATION_FRAGMENT
+}
