@@ -1,11 +1,11 @@
 package com.beok.bowlini.ocr
 
 import android.Manifest
-import android.graphics.Matrix
+import android.content.Context
+import android.hardware.display.DisplayManager
 import android.os.Bundle
-import android.util.Size
-import android.view.Surface
-import android.view.ViewGroup
+import android.util.DisplayMetrics
+import android.util.Rational
 import androidx.camera.core.CameraX
 import androidx.camera.core.Preview
 import androidx.camera.core.PreviewConfig
@@ -13,15 +13,36 @@ import com.beok.bowlini.common.base.BaseFragment
 import com.beok.bowlini.common.base.BaseViewModel
 import com.beok.bowlini.common.wrapper.TedPermissionWrapper
 import com.beok.bowlini.ocr.databinding.FragmentOcrBinding
+import com.beok.bowlini.ocr.utils.AutoFitPreviewBuilder
 import com.gun0912.tedpermission.PermissionListener
 
 class OcrFragment : BaseFragment<FragmentOcrBinding, BaseViewModel>(
     R.layout.fragment_ocr
 ) {
 
+    private var displayId = -1
+    private var preview: Preview? = null
+    private lateinit var displayManager: DisplayManager
+    private val displayListener = object : DisplayManager.DisplayListener {
+        override fun onDisplayChanged(displayId: Int) = Unit
+
+        override fun onDisplayAdded(displayId: Int) = Unit
+
+        override fun onDisplayRemoved(displayId: Int) = view?.let { view ->
+            if (displayId == this@OcrFragment.displayId) {
+                preview?.setTargetRotation(view.display.rotation)
+            }
+        } ?: Unit
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         checkCameraPermission()
+    }
+
+    override fun onDestroyView() {
+        unregisterDisplayListener()
+        super.onDestroyView()
     }
 
     private fun checkCameraPermission() {
@@ -40,50 +61,38 @@ class OcrFragment : BaseFragment<FragmentOcrBinding, BaseViewModel>(
     }
 
     private fun startCamera() {
-        val previewConfig = PreviewConfig.Builder().apply {
-            setTargetResolution(Size(0, 0))
-        }.build()
+        registerDisplayListener()
+        bindCamera()
+    }
 
-        val preview = Preview(previewConfig)
-
-        preview.setOnPreviewOutputUpdateListener { previewOutput ->
-            binding.viewFinder.let {
-                val parent = it.parent as ViewGroup
-                parent.removeView(it)
-                parent.addView(it, 0)
-
-                it.surfaceTexture = previewOutput.surfaceTexture
-                updateTransform()
-            }
-        }
-
-        CameraX.bindToLifecycle(
-            this,
-            preview
+    private fun registerDisplayListener() {
+        displayManager =
+            requireContext().getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+        displayManager.registerDisplayListener(
+            displayListener,
+            null
         )
     }
 
-    private fun updateTransform() {
-        val matrix = Matrix()
+    private fun bindCamera() {
+        val metrics = DisplayMetrics().also { binding.viewFinder.display.getRealMetrics(it) }
+        val screenAspectRatio = Rational(metrics.widthPixels, metrics.heightPixels)
 
-        binding.viewFinder.run {
-            val centerX = width / 2f
-            val centerY = height / 2f
+        val viewFinderConfig = PreviewConfig.Builder().apply {
+            setLensFacing(CameraX.LensFacing.BACK)
+            setTargetAspectRatio(screenAspectRatio)
+            setTargetRotation(binding.viewFinder.display.rotation)
+        }.build()
 
-            val rotationDegree = when (display.rotation) {
-                Surface.ROTATION_0 -> 0
-                Surface.ROTATION_90 -> 90
-                Surface.ROTATION_180 -> 180
-                Surface.ROTATION_270 -> 270
-                else -> return
-            }
+        preview = AutoFitPreviewBuilder.getPreview(
+            config = viewFinderConfig,
+            viewFinder = binding.viewFinder
+        )
 
-            matrix.postRotate(
-                -rotationDegree.toFloat(),
-                centerX,
-                centerY
-            )
-            setTransform(matrix)
-        }
+        CameraX.bindToLifecycle(viewLifecycleOwner, preview)
+    }
+
+    private fun unregisterDisplayListener() {
+        displayManager.unregisterDisplayListener(displayListener)
     }
 }
