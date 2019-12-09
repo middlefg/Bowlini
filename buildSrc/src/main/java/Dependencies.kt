@@ -29,7 +29,7 @@ object Libraries {
     private const val TESSERACT_VER = "9.0.0"
     private const val NAV_VER = "2.0.0"
     private const val TED_PERMISSION_VER = "2.2.2"
-    private const val CAMERAX_VER = "1.0.0-alpha06"
+    private const val CAMERAX_VER = "1.0.0-alpha05"
 
     const val STDLIB = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.KOTLIN}"
     const val MATERIAL = "com.google.android.material:material:$MATERIAL_VER"
